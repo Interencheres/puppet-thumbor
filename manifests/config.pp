@@ -16,21 +16,21 @@ class thumbor::config {
     ensure => present,
     owner  => root,
     group  => root,
-    mode   => 0644,
+    mode   => "0644",
     content=> template('thumbor/default.erb'),
   }
   file {'/etc/thumbor.conf':
     ensure => present,
     owner  => root,
     group  => root,
-    mode   => 0644,
+    mode   => "0644",
     content=> template($thumbor::conffile,'thumbor/thumbor.conf.erb')
   }
   file {'/etc/thumbor.key':
     ensure => present,
     owner  => 'thumbor',
     group  => 'thumbor',
-    mode   => 0600,
+    mode   => "0600",
     content=> $thumbor::security_key,
   }
 }
