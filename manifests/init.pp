@@ -17,16 +17,19 @@ class thumbor (
   $ip='0.0.0.0', 
   $config = {}, 
   $conffile = '/dev/null',
-  $install_method = 'apt'
+  $install_method = 'apt',
+  $manage_service = false,
 ) {
 
     ## Modules
     include thumbor::config
-    include thumbor::service
 
-    ## Ordering
-    Class['thumbor::config']
-    ~> Class['thumbor::service']
+    if ($manage_service) {
+      include thumbor::service
+      ## Ordering
+      Class['thumbor::config']
+      ~> Class['thumbor::service']
+    }
 
     if $install_method == 'apt' {
         include thumbor::repo
